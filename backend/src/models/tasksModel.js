@@ -5,7 +5,19 @@ const getAll = async () => {
     return tasks;
 };
 
+const createTask = async (task) =>{
+    const {title } = task;
+
+    const dateUTC = new Date(Date.now()).toUTCString();
+
+    const [createdTask] = await connection.execute
+        ('INSERT INTO tasks(title, status, created_at) VALUES(?,?,?)' [title, 'pendente', dateUTC]);
+
+    return createdTask;
+
+}
 
 module.exports = {
-    getAll
+    getAll,
+    createTask
 };
